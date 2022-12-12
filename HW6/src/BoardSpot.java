@@ -9,11 +9,15 @@ public class BoardSpot {
 		this.seenByQueenCount = seenByQueenCount;
 	}
 	
-	public boolean checkAvailable() {
+	public boolean isAvailable() {
 		if((hasQueen == false) && (seenByQueenCount > 0))
 			return true;
 		
 		return false;
+	}
+	
+	public void seen() {
+		seenByQueenCount++;
 	}
 	
 	public void removeQueen() {
