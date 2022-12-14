@@ -36,7 +36,7 @@ public class Main {
 			return false; //Otherwise break and just spit out false
 		}
 		
-		for(int i = 0; i < actualPositions; i++) { //For every item in array thats not the last 0s
+		for(int i = 0; i <= actualPositions; i++) { //For every item in array thats not the last 0s
 			if(board[i][givenBoard[i]].isAvailable() && givenBoard[i] >= 0) { //if BoardSpot is !seen by queen and needs to be placed on this row
 				
 				board[i][givenBoard[i]].placeQueen();
@@ -79,14 +79,12 @@ public class Main {
 					startCol--;
 				}
 				
-				
-				
-				if(i == actualPositions) { //Made it through all of the queen placements and didn't have any issues
-					return true;
-				}
 			}
-			else
+			if(i == actualPositions) { //Made it through all of the queen placements and didn't have any issues
+				return true;
+			} else {
 				break;
+			}
 		}
 		
 		
