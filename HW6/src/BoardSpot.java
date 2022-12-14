@@ -20,6 +20,10 @@ public class BoardSpot {
 		seenByQueenCount++;
 	}
 	
+	public void unSee() {
+		seenByQueenCount--;
+	}
+	
 	public void removeQueen() {
 		hasQueen = false;
 		seenByQueenCount--;
