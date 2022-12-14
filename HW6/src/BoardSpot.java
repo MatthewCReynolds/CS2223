@@ -10,7 +10,7 @@ public class BoardSpot {
 	}
 	
 	public boolean isAvailable() {
-		if((hasQueen == false) && (seenByQueenCount == 0))
+		if((this.hasQueen == false) && (this.seenByQueenCount == 0))
 			return true;
 		
 		return false;

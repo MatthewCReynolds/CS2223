@@ -7,6 +7,12 @@ public class Main {
 		BoardSpot[][] board = new BoardSpot[n][n];
 		int actualPositions = givenBoard.length;
 		
+		//fill board
+		for(int i = 0; i < n; i++) {
+			for(int j = 0; j < n; j++) {
+				board[i][j] = new BoardSpot(false, 0);
+			}
+		}
 		
 		
 		Collections.reverse(Arrays.asList(givenBoard)); //reverse board to see if it has 0s at end
