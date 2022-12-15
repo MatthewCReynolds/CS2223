@@ -36,20 +36,16 @@ public class Main {
 			return false; //Otherwise break and just spit out false
 		}
 		
-		for(int i = 0; i <= actualPositions; i++) { //For every item in array thats not the last 0s
+		for(int i = 0; i <= actualPositions; i++) { //For every item in array thats not the ending 0s
 			if(board[i][givenBoard[i]].isAvailable() && givenBoard[i] >= 0) { //if BoardSpot is !seen by queen and needs to be placed on this row
 				
 				board[i][givenBoard[i]].placeQueen();
 				
 				for(int j = 0; j < n; j++) {//Update all spots seen by queen on same row
-					if(!board[i][givenBoard[i]].isAvailable()) {
-						board[i][j].seen();
-					}
+					board[i][j].seen();
 				}
 				for(int j = 0; j < n; j++) {//Update all spots seen by queen on same column
-					if(!board[i][givenBoard[i]].isAvailable()) {
-						board[i][i].seen();
-					}
+					board[i][i].seen();
 				}
 				
 				int startRow = i, startCol = givenBoard[i];// need to set to bottom left corner of diagonal
@@ -58,9 +54,8 @@ public class Main {
 					startCol--;
 				}
 				while(startRow > 0 && startRow < n && startCol > 0 && startCol < n) { //Update on positive slope diagonal
-					if(!board[i][givenBoard[i]].isAvailable()) {
-						board[startRow][startCol].seen();
-					}
+					board[startRow][startCol].seen();
+					
 					startRow--;
 					startCol++;
 				}
@@ -72,12 +67,13 @@ public class Main {
 					startCol--;
 				}
 				while(startRow > 0 && startRow < n && startCol > 0 && startCol < n) {// Update on negative slope diagonal
-					if(!board[i][givenBoard[i]].hasQueen) {
-						board[startRow][startCol].seen();
-					}
+					board[startRow][startCol].seen();
+					
 					startRow++;
 					startCol--;
 				}
+				
+				board[i][givenBoard[i]].resetQueenView(); //Update queen position back to 1.
 				
 			}
 			if(i == actualPositions) { //Made it through all of the queen placements and didn't have any issues

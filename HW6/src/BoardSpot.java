@@ -17,21 +17,25 @@ public class BoardSpot {
 	}
 	
 	public void seen() {
-		seenByQueenCount++;
+		this.seenByQueenCount++;
 	}
 	
 	public void unSee() {
-		seenByQueenCount--;
+		this.seenByQueenCount--;
 	}
 	
 	public void removeQueen() {
-		hasQueen = false;
-		seenByQueenCount--;
+		this.hasQueen = false;
+		this.seenByQueenCount--;
+	}
+	
+	public void resetQueenView() {
+		this.seenByQueenCount = 1;
 	}
 	
 	public void placeQueen() {
-		hasQueen = true;
-		seenByQueenCount++;
+		this.hasQueen = true;
+		this.seenByQueenCount++;
 	}
 	
 	
