@@ -33,31 +33,6 @@ public class nqueens {
 		return rowCount;
 	}
 	
-	/*
-	static int[] successor(int[] board, int n) { //Thanks for suggestion
-		int lastQueenRow = findEmpty(board, n) - 1;
-
-		if (board[n-1] != 0)
-			lastQueenRow = n-1;
-
-		if (board[lastQueenRow] < n) //move to right by one, not at the end
-			board[lastQueenRow] = board[lastQueenRow] + 1;
-		else {
-			board[lastQueenRow] = 0; // remove this queen because reached dead-end
-			lastQueenRow--;
-			while (board[lastQueenRow] == n){ // back tracking, find the first queen that can be to the right by one
-				board[lastQueenRow] = 0;
-				lastQueenRow--;
-			}
-			board[lastQueenRow] = board[lastQueenRow]+1;
-		}
-		
-		
-		return board;
-	}
-	*/
-	
-	
 	public static int[] nextLegalPosition(int[] board, int n) {
 		int[] newBoard = board.clone();
 		int i = findEmpty(board, n);
@@ -71,13 +46,12 @@ public class nqueens {
 				return backTrack(newBoard, n);
 			else {
 				newBoard[i] = newBoard[i] + 1;
-				if (isLegalPosition(newBoard, n)) {
+				if (isLegalPosition(newBoard, n))
 					return newBoard;
-				}
 				return nextLegalPosition(newBoard, n);
 			}
 		} else {
-			newBoard[i-1] = newBoard[i-1] + 1;
+			newBoard[i - 1] = newBoard[i - 1] + 1;
 			
 			if (newBoard[i-1] > n) {
 				newBoard[i-1] = 0;
@@ -122,7 +96,7 @@ public class nqueens {
 	}
 	
 	static void firstSolution() {
-		for(int i = 4; i < 21; i++){
+		for(int i = 4; i <= 36; i++){
 			
 			int[] b = new int[i];
 			int[] board = b;
@@ -138,7 +112,7 @@ public class nqueens {
 	}
 	
 	static void numSolution() {
-		for (int i = 4; i <= 20; i ++) {
+		for (int i = 4; i <= 17; i ++) {
 			int[] board = new int[i];
 			int solutions = 0;
 			
@@ -148,6 +122,7 @@ public class nqueens {
 					solutions++;
 				board = nextLegalPosition(board, i);
 			}
+			
 			
 			System.out.println("There are " + solutions + " solutions for " + i + " ns");
 		}
@@ -165,12 +140,16 @@ public class nqueens {
 		
 		int[] testBoard3 = {1,6,8,3,5,0,0,0};
 		n = 8;
-		System.out.println("Third provided example for isLegalPos : " + isLegalPosition(testBoard3,n));
+		System.out.println("Third provided example for isLegalPos : " + isLegalPosition(testBoard3,n) + "\n");
 		
 		
+		System.out.println("\nI limited it from 4-36 since that's all I'll be graded for and didn't want to waste your time."
+				+ "\nIt will theoretically do as many as you are willing to wait for it to calculate though.\n");
 		System.out.println("The first solutions are: ");
 		firstSolution();
 		
+		System.out.println("\n\nI limited this from 4-17 since that's all you'll be grading for and dont want to waste your time."
+				+ "\nAnd again it will theortically do as many as you are willing to wait for it to find.\n");
 		System.out.println("All solutions as follows: ");
 		numSolution();
 		
