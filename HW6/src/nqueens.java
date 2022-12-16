@@ -33,6 +33,7 @@ public class nqueens {
 		return rowCount;
 	}
 	
+	/*
 	static int[] successor(int[] board, int n) { //Thanks for suggestion
 		int lastQueenRow = findEmpty(board, n) - 1;
 
@@ -54,35 +55,59 @@ public class nqueens {
 		
 		return board;
 	}
+	*/
 	
-	static int[] nextLegalPosition(int[] board, int n) {
-		boolean isBoardLegal= isLegalPosition(board, n);
-
-		if (isBoardLegal == true){ //Legal
-			if (board[n-1] != 0){ //full
-				int[] nextBoard = board;
-				do {
-					nextBoard = successor(nextBoard, n);
-				} while (!isLegalPosition(nextBoard, n));
-				board = nextBoard;
+	
+	public static int[] nextLegalPosition(int[] board, int n) {
+		int[] newBoard = board.clone();
+		int i = findEmpty(board, n);
+		boolean isFullBoard = false;
+		
+		if (i == n)
+			isFullBoard = true;
+		
+		if (isLegalPosition(newBoard, n)) {
+			if (isFullBoard)
+				return backTrack(newBoard, n);
+			else {
+				newBoard[i] = newBoard[i] + 1;
+				if (isLegalPosition(newBoard, n)) {
+					return newBoard;
+				}
+				return nextLegalPosition(newBoard, n);
 			}
-			else { //partial, legal
-				int r = findEmpty(board, n);
-				board[r] = 1;
-				nextLegalPosition(board, n);
+		} else {
+			newBoard[i-1] = newBoard[i-1] + 1;
+			
+			if (newBoard[i-1] > n) {
+				newBoard[i-1] = 0;
+				return backTrack(newBoard, n);
 			}
+			
+			if (isLegalPosition(newBoard, n))
+				return newBoard;
+			else
+				return nextLegalPosition(newBoard, n);
 		}
-
-		else if (isBoardLegal == false){ // partial, illegal
-			int[] nextBoard = board;
-			do {
-				nextBoard = successor(nextBoard, n);
-			} while (!isLegalPosition(nextBoard, n));
-			board = nextBoard;
+	}
+	
+	public static int[] backTrack(int[] board, int n) {
+		int[] newBoard = board.clone();
+		int i = findEmpty(board, n);
+		
+		if (i == 0)
+			return null;
+		
+		newBoard[i-1] = newBoard[i-1] + 1;
+		if (newBoard[i-1] > n) {
+			newBoard[i-1] = 0;
+			return backTrack(newBoard, n);
 		}
 		
-		
-		return board;
+		if (isLegalPosition(newBoard, n))
+			return newBoard;
+		else
+			return backTrack(newBoard, n);
 	}
 
 	static void printBoard(int[] board, int n) {
@@ -97,7 +122,7 @@ public class nqueens {
 	}
 	
 	static void firstSolution() {
-		for(int i = 4; i < 41; i++){
+		for(int i = 4; i < 21; i++){
 			
 			int[] b = new int[i];
 			int[] board = b;
@@ -109,6 +134,22 @@ public class nqueens {
 			
 			
 			printBoard(board, i);
+		}
+	}
+	
+	static void numSolution() {
+		for (int i = 4; i <= 20; i ++) {
+			int[] board = new int[i];
+			int solutions = 0;
+			
+			board = nextLegalPosition(board, i);
+			while (board != null) {
+				if (findEmpty(board, i) == i)
+					solutions++;
+				board = nextLegalPosition(board, i);
+			}
+			
+			System.out.println("There are " + solutions + " solutions for " + i + " ns");
 		}
 	}
 	
@@ -126,10 +167,12 @@ public class nqueens {
 		n = 8;
 		System.out.println("Third provided example for isLegalPos : " + isLegalPosition(testBoard3,n));
 		
+		
 		System.out.println("The first solutions are: ");
 		firstSolution();
 		
 		System.out.println("All solutions as follows: ");
+		numSolution();
 		
 		
 		
